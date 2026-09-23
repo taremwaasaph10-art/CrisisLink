@@ -1,10 +1,19 @@
-import { createInertiaApp } from '@inertiajs/react';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router';
+import { AuthProvider } from '@/context/auth-context';
+import { AppRoutes } from '@/routes';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const root = document.getElementById('app');
 
-void createInertiaApp({
-    title: (title) => (title ? `${title} - ${appName}` : appName),
-    progress: {
-        color: '#4B5563',
-    },
-});
+if (root) {
+    createRoot(root).render(
+        <StrictMode>
+            <BrowserRouter>
+                <AuthProvider>
+                    <AppRoutes />
+                </AuthProvider>
+            </BrowserRouter>
+        </StrictMode>,
+    );
+}

@@ -2,4 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::inertia('/', 'welcome')->name('home');
+/*
+ * The React single-page app handles every non-API URL client-side.
+ */
+Route::view('/{path?}', 'app')
+    ->where('path', '^(?!api/|up$|storage/).*$')
+    ->name('home');

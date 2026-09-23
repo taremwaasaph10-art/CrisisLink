@@ -1,11 +1,93 @@
+@import 'leaflet/dist/leaflet.css';
 @import 'tailwindcss';
 
 @source '../views';
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 
 @theme {
     --font-sans:
         'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
+
+    --color-sos-50: oklch(0.971 0.013 17.38);
+    --color-sos-100: oklch(0.936 0.032 17.717);
+    --color-sos-500: oklch(0.637 0.237 25.331);
+    --color-sos-600: oklch(0.577 0.245 27.325);
+    --color-sos-700: oklch(0.505 0.213 27.518);
+    --color-sos-800: oklch(0.444 0.177 26.899);
+
+    --animate-sos-pulse: sos-pulse 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+    @keyframes sos-pulse {
+        0% {
+            transform: scale(0.92);
+            opacity: 0.55;
+        }
+        70% {
+            transform: scale(1.18);
+            opacity: 0;
+        }
+        100% {
+            transform: scale(1.18);
+            opacity: 0;
+        }
+    }
+}
+
+@layer base {
+    button:not(:disabled),
+    [role='button']:not(:disabled) {
+        cursor: pointer;
+    }
+
+    :focus-visible {
+        outline: 3px solid var(--color-sky-500);
+        outline-offset: 2px;
+    }
+}
+
+/* Map pins rendered by Leaflet divIcons, coloured by request priority. */
+.map-pin {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 9999px 9999px 9999px 0;
+    transform: rotate(-45deg);
+    border: 3px solid #fff;
+    box-shadow: 0 2px 6px rgb(15 23 42 / 0.45);
+    background: var(--pin-color, var(--color-slate-500));
+}
+
+.map-pin::after {
+    content: '';
+    width: 9px;
+    height: 9px;
+    border-radius: 9999px;
+    background: #fff;
+}
+
+.map-pin--critical {
+    --pin-color: var(--color-red-600);
+}
+.map-pin--high {
+    --pin-color: var(--color-orange-500);
+}
+.map-pin--medium {
+    --pin-color: var(--color-amber-400);
+}
+.map-pin--low {
+    --pin-color: var(--color-slate-500);
+}
+.map-pin--you {
+    --pin-color: var(--color-blue-600);
+}
+
+.leaflet-container {
+    font-family: var(--font-sans);
+}
+
+.leaflet-popup-content {
+    margin: 12px 14px;
 }
